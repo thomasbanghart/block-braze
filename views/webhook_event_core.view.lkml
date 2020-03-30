@@ -16,23 +16,6 @@ view: webhook_event {
     description: "id of the campaign if from a campaign"
   }
 
-  dimension_group: campaign_updated {
-    type: time
-    hidden: yes
-    sql: PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ${TABLE}.camapign_updated_at) ;;
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year,
-      fiscal_month_num,
-      fiscal_quarter,
-      fiscal_quarter_of_year,
-      fiscal_year]
-  }
-
   dimension: canvas_id {
     type: number
     hidden: yes
@@ -45,40 +28,6 @@ view: webhook_event {
     hidden: yes
     sql: ${TABLE}.canvas_step_id ;;
     description: "id of the step for this message if from a Canvas"
-  }
-
-  dimension_group: canvas_step_updated {
-    type: time
-    hidden: yes
-    sql: PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ${TABLE}.canvas_step_updated_at) ;;
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year,
-      fiscal_month_num,
-      fiscal_quarter,
-      fiscal_quarter_of_year,
-      fiscal_year]
-  }
-
-  dimension_group: canvas_updated {
-    type: time
-    hidden: yes
-    sql: PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ${TABLE}.canvas_updated_at) ;;
-    timeframes: [
-      raw,
-      date,
-      week,
-      month,
-      quarter,
-      year,
-      fiscal_month_num,
-      fiscal_quarter,
-      fiscal_quarter_of_year,
-      fiscal_year]
   }
 
   dimension: canvas_variation_id {
@@ -102,6 +51,81 @@ view: webhook_event {
     description: "id of the message variation if from a campaign"
   }
 
+  dimension: send_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.send_id ;;
+    description: "id of the message if specified for the campaign"
+  }
+
+  dimension: timezone {
+    type: string
+    hidden: yes
+    sql: ${TABLE}.timezone ;;
+    description: "IANA timezone of the user at the time of the event"
+  }
+
+  dimension: user_id {
+    type: number
+    hidden: yes
+    sql: ${TABLE}.user_id ;;
+    description: "braze user id of the user"
+  }
+
+  dimension_group: campaign_updated {
+    type: time
+    hidden: yes
+    sql: PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ${TABLE}.camapign_updated_at) ;;
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year,
+      fiscal_month_num,
+      fiscal_quarter,
+      fiscal_quarter_of_year,
+      fiscal_year
+    ]
+  }
+
+  dimension_group: canvas_step_updated {
+    type: time
+    hidden: yes
+    sql: PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ${TABLE}.canvas_step_updated_at) ;;
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year,
+      fiscal_month_num,
+      fiscal_quarter,
+      fiscal_quarter_of_year,
+      fiscal_year
+    ]
+  }
+
+  dimension_group: canvas_updated {
+    type: time
+    hidden: yes
+    sql: PARSE_TIMESTAMP('%Y-%m-%dT%H:%M:%S', ${TABLE}.canvas_updated_at) ;;
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year,
+      fiscal_month_num,
+      fiscal_quarter,
+      fiscal_quarter_of_year,
+      fiscal_year
+    ]
+  }
+
   dimension_group: message_variation_updated {
     type: time
     hidden: yes
@@ -116,13 +140,8 @@ view: webhook_event {
       fiscal_month_num,
       fiscal_quarter,
       fiscal_quarter_of_year,
-      fiscal_year]
-  }
-  dimension: send_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.send_id ;;
-    description: "id of the message if specified for the campaign"
+      fiscal_year
+    ]
   }
 
   dimension_group: time {
@@ -140,21 +159,8 @@ view: webhook_event {
       fiscal_month_num,
       fiscal_quarter,
       fiscal_quarter_of_year,
-      fiscal_year]
-  }
-
-  dimension: timezone {
-    type: string
-    hidden: yes
-    sql: ${TABLE}.timezone ;;
-    description: "IANA timezone of the user at the time of the event"
-  }
-
-  dimension: user_id {
-    type: number
-    hidden: yes
-    sql: ${TABLE}.user_id ;;
-    description: "braze user id of the user"
+      fiscal_year
+    ]
   }
 
   measure: count {
